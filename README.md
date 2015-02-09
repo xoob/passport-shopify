@@ -1,5 +1,7 @@
 # passport-shopify
 
+[![Build Status](https://travis-ci.org/xoob/passport-shopify.svg?branch=master)](https://travis-ci.org/xoob/passport-shopify)
+
 [Shopify]() authentication strategy using OAuth 2.0 for [Passport](http://passportjs.org/) and Node.js.
 
 ## Install
@@ -19,19 +21,21 @@ The Shopify authentication strategy authenticates Shopify account holders, usual
 #### Configuration
 
 
-    passport.use(new ShopifyStrategy({
-        clientID: SHOPIFY_APP_ID,
-        clientSecret: SHOPIFY_APP_SECRET,
-        myshopifyDomain: SHOPIFY_SHOP_DOMAIN,
-        callbackURL: "http://localhost:3000/auth/shopify/callback"
-      },
-      function(accessToken, refreshToken, profile, done) {
-        Shop.findOrCreate({ shopId: profile.id, accessToken: accessToken },
-          function (err, shop) {
-            return done(err, shop);
-          });
-      }
-    ));
+```javascript
+passport.use(new ShopifyStrategy({
+    clientID: SHOPIFY_APP_ID,
+    clientSecret: SHOPIFY_APP_SECRET,
+    myshopifyDomain: SHOPIFY_DOMAIN,
+    callbackURL: "http://localhost:3000/auth/shopify/callback"
+  },
+  function(accessToken, refreshToken, profile, done) {
+    Shop.findOrCreate({ shopId: profile.id, accessToken: accessToken },
+      function (err, shop) {
+        return done(err, shop);
+      });
+  }
+));
+```
 
 The `verify` callback for Shopify authentication accepts three arguments:
 
@@ -46,15 +50,17 @@ Note: For security reasons, the callback URL must reside on the same host that i
 
 Two routes are required for Shopify authentication. The first route redirects the user to Shopify. The second route is the URL to which Shopify will redirect the user after they have logged in.
 
-    app.get('/auth/shopify',
-      passport.authenticate('shopify'));
+```javascript
+app.get('/auth/shopify',
+  passport.authenticate('shopify'));
 
-    app.get('/auth/shopify/callback',
-      passport.authenticate('shopify', { failureRedirect: '/login' }),
-      function(req, res) {
-        // Successful authentication, redirect home.
-        res.redirect('/');
-      });
+app.get('/auth/shopify/callback',
+  passport.authenticate('shopify', { failureRedirect: '/login' }),
+  function(req, res) {
+    // Successful authentication, redirect home.
+    res.redirect('/');
+  });
+```
 
 Note that the URL of the callback route matches that of the `callbackURL` option specified when configuring the strategy.
 
@@ -62,8 +68,10 @@ Note that the URL of the callback route matches that of the `callbackURL` option
 
 To specify which parts of a shop's data you would like to access, Shopify provides a [list of possible access scopes](http://docs.shopify.com/api/authentication/oauth#scopes) you can request via the `scope` option to `passport.authenticate()`.
 
-    app.get('/auth/shopify',
-      passport.authenticate('shopify', { scope: ['read_products', 'write_products'] }));
+```javascript
+app.get('/auth/shopify',
+  passport.authenticate('shopify', { scope: ['read_products', 'write_products'] }));
+```
 
 ## Examples
 
