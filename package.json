@@ -1,5 +1,5 @@
 {
-  "name": "passport-shopify",
+  "name": "xoob-passport-shopify",
   "version": "0.1.0",
   "description": "Shopify authentication strategy for Passport.",
   "keywords": [
