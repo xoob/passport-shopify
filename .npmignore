@@ -12,3 +12,8 @@ node_modules/
 npm-debug.log
 
 .c9/
+
+examples/
+test/
+.travis.yml
+.npmignore

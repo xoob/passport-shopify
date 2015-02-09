@@ -40,7 +40,7 @@ passport.use(new ShopifyStrategy({
 The `verify` callback for Shopify authentication accepts three arguments:
 
  - `accessToken` - `{string}` - This is a permanent API access token that can be used to access the shop’s data as long as the client is installed. Clients should store the token somewhere to make authenticated requests for a shop’s data.
- - `refreshToken` - `{null}` - This argument is always undefined, since the access token is permanent and Shopify does not use refresh tokens.
+ - `refreshToken` - `{undefined}` - This argument is always undefined, since the access token is permanent and Shopify does not use refresh tokens.
  - `profile` - `{object}` - Detailed shop information provided by Shopify; refer to [User Profile]() for additional information.
 
 
